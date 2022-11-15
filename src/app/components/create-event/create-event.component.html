@@ -1,0 +1,22 @@
+<div class="create-event-container">
+    <form [formGroup]="createEventForm" (ngSubmit)="onSubmit()" style="padding-bottom: 20px; width: 450px;" class="create-event" [style]="clickCreateEvent ? 'margin-left: 0vw' : ''">
+        <span class="create-event-header">Create Event</span>
+            <label style=" margin-bottom: 20px;">Title:<input formControlName="title" [ngClass]="{ 'is-invalid': submitted && createEventForm.controls.title.errors }" [style]="submitted && createEventForm.controls.title.errors ? 'outline: 1px solid #b30000;' : ''" type="text" placeholder="Title" ></label>
+            <div *ngIf="submitted && createEventForm.controls.title.errors" class="validation-error">               
+                <div *ngIf="createEventForm.controls.title.errors.required">Is required</div>
+            </div>
+            <label style=" margin-bottom: 20px;">Description:<input formControlName="description" [ngClass]="{ 'is-invalid': submitted && createEventForm.controls.description.errors }" [style]="submitted && createEventForm.controls.description.errors ? 'outline: 1px solid #b30000;' : ''" type="text" placeholder="Description" ></label>
+            <div *ngIf="submitted && createEventForm.controls.description.errors" class="validation-error">               
+                <div *ngIf="createEventForm.controls.description.errors.required">Is required</div>
+            </div>
+        <div style="width: 62%; display: inline-flex; justify-content: center; margin-bottom: 20px;">
+        <div style="margin-right: 4%; display: flex; flex-direction: column; width: 62%;">
+        </div>
+		</div>
+        <button class="create-event-button" (click)="sendCreateEvent()"><b>Crear Evento</b></button>
+    </form>
+</div>
+
+
+
+   

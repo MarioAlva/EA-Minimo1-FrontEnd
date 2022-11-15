@@ -1,0 +1,69 @@
+<div class="login-container">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" style="padding-bottom: 20px; width: 400px; padding: 30px 0 10px 0" class="login" [style]="clickLogin ? 'margin-left: 0vw' : ''" [style]="clickRegister || clickForgot ? 'margin-right: 260vw; position: absolute' : ''">
+            <span class="login-header">Log in</span>
+                <label style=" margin-bottom: 20px;">Email:<input formControlName="email" [ngClass]="{ 'is-invalid': submitted && loginForm.controls.email.errors }" [style]="submitted && loginForm.controls.email.errors ? 'outline: 1px solid #b30000;' : ''" type="text" placeholder="Email" ></label>
+                <div *ngIf="submitted && loginForm.controls.email.errors" class="validation-error">
+                    <div *ngIf="loginForm.controls.email.errors.required">Is required</div>
+                </div>
+                <label style=" margin-bottom: 20px;">Password:<input formControlName="password" [ngClass]="{ 'is-invalid': submitted && loginForm.controls.password.errors }" [style]="submitted && loginForm.controls.password.errors ? 'outline: 1px solid #b30000;' : ''" type="password" placeholder="Password" ></label>
+                <div *ngIf="submitted && loginForm.controls.password.errors" class="validation-error">
+                    <div *ngIf="loginForm.controls.password.errors.required">Is required</div>
+                </div>
+                <div *ngIf="userDataErr" class="validation-error">
+                    <div class="alert alert-success" role="alert">
+                        Los datos introducidos no son correctos
+                    </div>
+                </div>
+                <span class="login-forgot">¿Te has olvidado la contraseña? <a class="auth-link" (click)="clickForgot = true">Click aqui</a></span>
+                <button class="login-button" (click)="sendLogin()"><b>Iniciar sesión</b></button>
+		    <span style="display: flex; justify-content: center; align-items: center;" class="login-forgot">¿Aún no tienes una cuenta? <a class="auth-link" (click)="clickRegister = true">Registrate</a></span>
+        </form>
+    <div class="back-button" [style]="clickRegister || clickForgot ? 'margin-right: 280vw' : ''" (click)="clickRegister = false; clickForgot = false">
+    </div>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" style="padding-bottom: 20px; width: 450px;" class="register" [style]="clickRegister ? 'margin-left: 0vw' : ''">
+        <span class="login-header">Registrate</span>
+		<label style=" margin-bottom: 20px;">Nombre completo:<input formControlName="name" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.name.errors }" [style]="submitted && registerForm.controls.name.errors ? 'outline: 1px solid #b30000;' : ''" type="text" placeholder="Nombre" ></label>
+        <div *ngIf="submitted && registerForm.controls.name.errors" class="validation-error">
+            <div *ngIf="registerForm.controls.name.errors.required">Is required</div>
+        </div>
+		<div style="width: 62%; display: inline-flex; justify-content: center; margin-bottom: 20px;">
+            <div style="margin-right: 4%; display: flex; flex-direction: column; width: 62%;">
+			<label style="width: 100%;">Nombre de usuario<input [style]="submitted && registerForm.controls.username.errors ? 'outline: 1px solid #b30000;' : ''" formControlName="username" name="Nombre de usuario" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.name.errors }" type="text" placeholder="Nombre de usuario"></label>
+            <div style="width: 100%; margin-top: 3px; margin-bottom: -16.6px; margin-left: 10px;" *ngIf="submitted && registerForm.controls.username.errors" class="validation-error">
+                <div *ngIf="registerForm.controls.username.errors.required">Is required</div>
+            </div>
+            </div>
+            <div style="margin-left: 4%; display: flex; flex-direction: column; width: 62%;">
+			<label style="width: 100%;">Fecha de nacimiento:<input type="date" [style]="submitted && !uponAge ? 'outline: 1px solid #b30000;' : ''" formControlName="dateBirth" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.name.errors }"></label>
+            <div style="width: 100%; margin-top: 3px; margin-bottom: -16.6px; margin-left: 10px;" *ngIf="submitted && !uponAge" class="validation-error">
+                <div>You must be 13</div>
+            </div>
+            </div>
+		</div>
+        <label>Contraseña:<input [style]="submitted && registerForm.controls.password.errors ? 'outline: 1px solid #b30000;' : ''" style="margin-bottom: 20px;" type="password" placeholder="Contraseña" formControlName="password" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.name.errors }"></label>
+        <div *ngIf="submitted && registerForm.controls.password.errors" class="validation-error">
+            <div *ngIf="registerForm.controls.password.errors.required">Is required</div>
+        </div>
+        <label>Repite la contraseña:<input [style]="submitted && registerForm.controls.repeatPass.errors ? 'outline: 1px solid #b30000;' : ''" style="margin-bottom: 20px;" formControlName="repeatPass" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.name.errors }" type="password" placeholder="Repite la contraseña"></label>
+		<div *ngIf="submitted && (registerForm.controls.repeatPass.errors || !samepass)" class="validation-error">
+			<div *ngIf="registerForm.controls.repeatPass.errors" >
+        	    <div *ngIf="registerForm.controls.repeatPass.errors.required">Is required</div>
+        	</div>
+			<div>
+				<div *ngIf="registerForm.value.password !== registerForm.value.repeatPass">The password is not the same</div>
+			</div>
+		</div>
+        <label style=" margin-bottom: 0px;">Email<input [style]="submitted && registerForm.controls.email.errors ? 'outline: 1px solid #b30000;' : ''" formControlName="email" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.name.errors }" type="email" placeholder="Email"></label>
+        <div style="margin-top: 3px;" *ngIf="submitted && registerForm.controls.email.errors" class="validation-error">
+            <div *ngIf="registerForm.controls.email.errors.required">Is required</div>
+            <div *ngIf="registerForm.controls.email.errors.email">Must be an email</div>
+        </div>
+		<div style="display: inline-flex; align-items: center; margin-top: 5px;"><input style="width: 16px; margin-right: 10px;" type="radio"> <label style="width: 100%;">He leido y acepto todos los terminos</label></div>
+        <button class="login-button" (click)="sendRegister()"><b>Registrarse</b></button>
+    </form>
+    <div style="padding-bottom: 20px;" class="forgot" [style]="clickForgot ? 'margin-left: 0vw' : ''">
+        <span class="login-header">Recuperar contraseña</span>
+        <label>Nombre de usuario<input type="text" placeholder="Nombre de usuario"></label>
+        <button class="login-button"><b>Recuperar</b></button>
+    </div>
+</div>

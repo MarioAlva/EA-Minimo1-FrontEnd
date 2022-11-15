@@ -1,0 +1,30 @@
+<div class="login-container">
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" style="padding-bottom: 20px; width: 450px;" class="register" [style]="clickRegister ? 'margin-left: 0vw' : ''">
+    <span class="login-header">Update</span>
+    <label style=" margin-bottom: 20px;">Nombre completo:<input formControlName="name" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.name.errors }" [style]="submitted && registerForm.controls.name.errors ? 'outline: 1px solid #b30000;' : ''" type="text" [(ngModel)]="user.name" ></label>
+    <div *ngIf="submitted && registerForm.controls.name.errors" class="validation-error">
+        <!--<div *ngIf="registerForm.controls.name.errors.required">Is required</div>-->
+    </div>
+    <div style="width: 62%; display: inline-flex; justify-content: center; margin-bottom: 20px;">
+        <div style="margin-right: 4%; display: flex; flex-direction: column; width: 62%;">
+        <label style="width: 100%;">Nombre de usuario<input [style]="submitted && registerForm.controls.username.errors ? 'outline: 1px solid #b30000;' : ''" formControlName="username" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.name.errors }" type="text" [(ngModel)]="user.username"></label>
+        <div style="width: 100%; margin-top: 3px; margin-bottom: -16.6px; margin-left: 10px;" *ngIf="submitted && registerForm.controls.username.errors" class="validation-error">
+           <!-- <div *ngIf="registerForm.controls.username.errors.required">Is required</div>-->
+        </div>
+        </div>
+        <div style="margin-left: 4%; display: flex; flex-direction: column; width: 62%;">
+        <label style="width: 100%;">Fecha de nacimiento:<input type="date" [style]="submitted && !uponAge ? 'outline: 1px solid #b30000;' : ''" formControlName="dateBirth" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.name.errors }" placeholder={{user.birthdate}}></label>
+        <div style="width: 100%; margin-top: 3px; margin-bottom: -16.6px; margin-left: 10px;" *ngIf="submitted && !uponAge" class="validation-error">
+            <div>You must be 13</div>
+        </div>
+        </div>
+    </div>
+    <label style=" margin-bottom: 0px;">Email<input [style]="submitted && registerForm.controls.email.errors ? 'outline: 1px solid #b30000;' : ''" formControlName="email" [ngClass]="{ 'is-invalid': submitted && registerForm.controls.name.errors }" type="email" [(ngModel)]="user.email"></label>
+    <div style="margin-top: 3px;" *ngIf="submitted && registerForm.controls.email.errors" class="validation-error">
+        <!--<div *ngIf="registerForm.controls.email.errors.required">Is required</div>-->
+        <div *ngIf="registerForm.controls.email.errors.email">Must be an email</div>
+    </div>
+    <div style="display: inline-flex; align-items: center; margin-top: 5px;"><input style="width: 16px; margin-right: 10px;" type="radio"> <label style="width: 100%;">He leido y acepto todos los terminos</label></div>
+    <button class="login-button" (click)="updateUser()"><b>Update</b></button>
+</form>
+</div>
