@@ -1,0 +1,54 @@
+<div class="faqs-container" style="overflow: scroll;">
+    <h1>FAQs</h1>
+    <form [formGroup]="addForm" (ngSubmit)="addFaq()">
+        <div class="modal-container" style="height: 330px; width: 73vw;">
+            <h1>Add FAQ</h1>
+            <label for="question">Question</label>
+            <input class="faq-input" formControlName="Question" name="question" type="text"/>
+            <label for="answer">Answer</label>
+            <input class="faq-input" formControlName="Answer" name="answer" type="text"/>
+            <label for="likes">Likes</label>
+            <input class="faq-input" formControlName="Likes" name="likes" type="text"/>
+            <label for="date">Date</label>
+            <input formControlName="Date" name="date" type="date"/>
+            <label for="user">User_id</label>
+            <input class="faq-input" formControlName="User" name="user" type="text"/>
+            <button (click)="addFaq()" class="faq-button">Añadir</button>
+        </div>
+    </form>
+    <div *ngIf="faqs">
+    <div class="each-faq" *ngFor="let faq of faqs">
+        <div class="faq-style">
+        <h2>{{faq.Question}}</h2>
+        <p>{{faq.Answer}}</p>
+        <div style="display: inline-flex; width: 100%;">
+            <div style="width: 50%;">
+                Hecho por: {{faq.User.name}} | Fecha: {{faq.Date}}
+            </div>
+            <div class="faqs-likes" style="width: 50%">
+                Gente que le ha gustado: {{faq.Likes}}
+            </div>
+        </div>
+        </div>
+        <div style="width: 100%; display: flex; justify-content: center;">
+            <div class="faq-button-container">
+            <button class="faq-button" (click)="editFaq(faq._id)">Editar</button>
+            <button class="faq-button" (click)="deleteFaq(faq._id)">Eliminar</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div *ngIf="modalOpened" class="modal-update">
+    <form [formGroup]="updateForm" (ngSubmit)="onSubmit(faq_id)">
+        <div class="modal-container">
+            <h1>Update FAQ</h1>
+            <label for="question">Question</label>
+            <input class="faq-input" formControlName="Question" name="question" type="text"/>
+            <label for="answer">Answer</label>
+            <input class="faq-input" formControlName="Answer" name="answer" type="text"/>
+            <button (click)="onSubmit(faq_id)" class="faq-button">Guardar</button>
+            <button (click)="cancelEditFaq()" class="faq-button">Cancelar</button>
+        </div>
+    </form>
+    </div>
+</div>
